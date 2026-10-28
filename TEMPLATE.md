@@ -1,6 +1,6 @@
 # [Lab / Room Name] - Investigation Report
 
-- **Platform:** [e.g., TryHackMe / Blue Team Labs Online]
+- **Platform:**  TryHackMe
 - **Category:** [e.g., Phishing / DFIR / Network Traffic]
 - **Difficulty:** [Easy / Medium / Hard]
 - **Author:** Sebastian Strychała
