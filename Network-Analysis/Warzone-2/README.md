@@ -1,15 +1,15 @@
-# [Lab / Room Name] - Investigation Report
+# Warzone 2 - Investigation Report
 
 - **Platform:**  TryHackMe
-- **Category:** [e.g., Phishing / DFIR / Network Traffic]
-- **Difficulty:** [Easy / Medium / Hard]
+- **Category:** Network Analysis
+- **Difficulty:** Medium 
 - **Author:** Sebastian Strychała
-- **Date:** YYYY-MM-DD
+- **Date:** 2026-10-29
 
 ---
 
 ## 1. Executive Summary
-Briefly explain what this investigation was about, what triggered the analysis, and the final verdict (e.g., *False Positive*, *True Positive / Malicious Email*).
+An alert triggered: Misc activity, A Network Trojan Was Detected, and Potential Corporate Privacy Violation. True Positive
 
 ---
 
