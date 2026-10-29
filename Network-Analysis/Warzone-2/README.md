@@ -6,6 +6,7 @@
 - **Author:** Sebastian Strychała
 - **Date:** 2026-10-29
 
+---
 
 # 1. Executive Summary
 Investigation was conducted following network IDS alerts indicating a Trojan infection, Command & Control (C2) activity, and potential corporate privacy violations targeting host `10.6.3.102`. Traffic analysis in Brim (Zeek) and NetworkMiner confirmed active HTTP payload retrievals (including `.cab` file extraction) and established connections to external adversary infrastructure. Cross-referencing extracted IP addresses, malicious domains, and file hashes with VirusTotal confirmed the activity as a **True Positive** security incident.
@@ -38,7 +39,11 @@ Investigation was conducted following network IDS alerts indicating a Trojan inf
   * **Action:** Performed a deeper correlation of events for the compromised workstation (`10.6.3.102`) by entering a query in Brim combining the host IP with the alert filter (`10.6.3.102 alert`)[cite: 2].
   * **Result:** Identified additional external IP addresses that communicated with the workstation and generated network traffic. Key IP addresses associated with the incident were detected and subsequently verified in the VirusTotal database to evaluate their detection rates and associated malicious domains.
 
+---
+
 # 3. Indicators of Compromise (IoCs)
+
+---
 
 ### 1. Victim Information
 * **Victim IP Address:** `10.6.3.102`[cite: 1]
@@ -55,6 +60,7 @@ Investigation was conducted following network IDS alerts indicating a Trojan inf
   * `safebanktest[.]top`[cite: 1]
   * `tocsicambar[.]xyz`[cite: 1]
   * `ulcertification[.]xyz`[cite: 1]
+  
 ---
 
 # 4. Key Takeaways & Mitigation
