@@ -28,7 +28,7 @@ Detail your step-by-step analysis using tools (e.g., Wireshark, CyberChef, Volat
 
 | Indicator | Type | Description / Notes |
 | :--- | :--- | :--- |
-| `192.168.1[.]100` | IP Address | C2 Server IP |
+| `185.118.164[.]8` | IP Address |
 | `malicious-domain[.]com` | Domain | Phishing Landing Page |
 | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | SHA256 | Malicious Attachment |
 
@@ -40,5 +40,4 @@ Detail your step-by-step analysis using tools (e.g., Wireshark, CyberChef, Volat
 
 ---
 
-```bash
-# Example command or query used during analysis
+
