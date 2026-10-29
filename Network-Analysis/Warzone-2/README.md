@@ -6,14 +6,13 @@
 - **Author:** Sebastian Strychała
 - **Date:** 2026-10-29
 
+
+# 1. Executive Summary
+Investigation was conducted following network IDS alerts indicating a Trojan infection, Command & Control (C2) activity, and potential corporate privacy violations targeting host `10.6.3.102`. Traffic analysis in Brim (Zeek) and NetworkMiner confirmed active HTTP payload retrievals (including `.cab` file extraction) and established connections to external adversary infrastructure. Cross-referencing extracted IP addresses, malicious domains, and file hashes with VirusTotal confirmed the activity as a **True Positive** security incident.
+
 ---
 
-## 1. Executive Summary
-An alert triggered: Misc activity, A Network Trojan Was Detected, and Potential Corporate Privacy Violation. True Positive
-
----
-
-## 2. Investigation & Analysis Process
+# 2. Investigation & Analysis Process
 
 ### 1. Initial Detection and Alert Analysis (Brim)
 * **Action:** Performed a PCAP file analysis using Brim. Queried for generated IDS/Suricata alerts (`alert`), then identified and filtered anomalies marked as critical.
@@ -39,19 +38,38 @@ An alert triggered: Misc activity, A Network Trojan Was Detected, and Potential 
   * **Action:** Performed a deeper correlation of events for the compromised workstation (`10.6.3.102`) by entering a query in Brim combining the host IP with the alert filter (`10.6.3.102 alert`)[cite: 2].
   * **Result:** Identified additional external IP addresses that communicated with the workstation and generated network traffic. Key IP addresses associated with the incident were detected and subsequently verified in the VirusTotal database to evaluate their detection rates and associated malicious domains.
 
-## 3. Indicators of Compromise (IoCs)
+# 3. Indicators of Compromise (IoCs)
 
-| Indicator | Type | Description / Notes |
-| :--- | :--- | :--- |
-| `185.118.164[.]8` | IP Address |
-| `malicious-domain[.]com` | Domain | Phishing Landing Page |
-| `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | SHA256 | Malicious Attachment |
+### 1. Victim Information
+* **Victim IP Address:** `10.6.3.102`[cite: 1]
 
+### 2. Primary Trojan Infrastructure (C2 / Payload)
+* **Attacker IP Address:** `185[.]118[.]164[.]8`[cite: 1]
+* **Malicious Domain:** `awh93dhkylps5ulnq-be[.]com`[cite: 1]
+* **Malicious File Hash (SHA-256):** `3769a84dbe7ba74ad7b0b355a864483d3562888a67806082ff094a56ce73bf7e`[cite: 1]
+
+### 3. Associated Infrastructure (VirusTotal / Not Suspicious Traffic)
+* **Associated IP Addresses:** `64[.]225[.]65[.]166`, `142[.]93[.]211[.]176`[cite: 1]
+* **Associated / Malicious Domains:**[cite: 1]
+  * `2partscow[.]top`[cite: 1]
+  * `safebanktest[.]top`[cite: 1]
+  * `tocsicambar[.]xyz`[cite: 1]
+  * `ulcertification[.]xyz`[cite: 1]
 ---
 
-## 4. Key Takeaways & Mitigation
-- **Findings:** Summary of key evidence discovered.
-- **Recommendations:** Steps to mitigate the threat or improve detection in the future.
+# 4. Key Takeaways & Mitigation
+
+### Key Takeaways
+* **Successful Payload Acquisition:** The victim workstation (`10.6.3.102`) established inbound/outbound HTTP communication with malicious external infrastructure, resulting in the download of a Trojan payload archive (`.cab` file)[cite: 1, 4].
+* **Multi-Stage Domain Infrastructure:** The adversary leveraged a cluster of malicious domains (such as `safebanktest[.]top`, `2partscow[.]top`, and `tocsicambar[.]xyz`) hosted across multiple external IP addresses to deliver payloads and maintain persistence[cite: 1, 4].
+* **Evasion & Low-Detection Endpoints:** Some external IP nodes involved in the session exhibited low or zero detection scores on VirusTotal (e.g., `64[.]225[.]65[.]166`), highlighting the reliance on reputation-neutral endpoints to bypass basic perimeter checks[cite: 1, 4].
+* **Privacy & Endpoint Exposure:** Client User-Agent strings and network telemetry were exposed during unencrypted HTTP sessions, providing adversaries with specific environment details[cite: 1, 4].
+
+### Mitigation & Recommendations
+1. **Host Isolation & Forensics:** Immediately isolate workstation `10.6.3.102` from the network to prevent potential lateral movement and perform a deep forensic disk scan for active registry persistence[cite: 1, 4].
+2. **Network Level Blocking (IoC Blacklisting):** Implement perimeter firewall and DNS sinkhole rules to block all communication with the identified malicious domains (`*.top`, `*.xyz`) and IP addresses (`185[.]118[.]164[.]8`, `64[.]225[.]65[.]166`, `142[.]93[.]211[.]176`)[cite: 1, 4].
+3. **Payload Signature Deployment:** Import the extracted SHA-256 hash (`3769a84dbe7ba74ad7b0b355a864483d3562888a67806082ff094a56ce73bf7e`) into the Endpoint Detection and Response (EDR) system to block any execution across the enterprise[cite: 1, 4].
+4. **Enhanced Suricata/Zeek Detection:** Refine network detection rules to trigger high-priority alerts on unencrypted HTTP archive downloads (`.cab`, `.zip`, `.iso`) originating from top-level domains with low reputation scores[cite: 1, 4].
 
 ---
 
