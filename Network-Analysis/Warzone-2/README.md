@@ -19,10 +19,14 @@ Investigation was conducted following network IDS alerts indicating a Trojan inf
 ### 1. Initial Detection and Alert Analysis (Brim)
 * **Action:** Performed a PCAP file analysis using Brim. Queried for generated IDS/Suricata alerts (`alert`), then identified and filtered anomalies marked as critical.
 * **Result:** Identified two alert signatures associated with Trojan network traffic. Secured defanged source IP addresses and detection signatures.
+* <img width="1156" height="932" alt="warzone2-1" src="https://github.com/user-attachments/assets/e74246ff-febb-4c6f-9407-73f0d9e2f344" />
+
 
 ### 2. HTTP Session Reconstruction and C2 Communication Identification (Brim)
 * **Action:** Analyzed network traffic associated with the identified IP address in Brim by filtering HTTP protocol queries (`ip == [DEFANGED_IP] http`).
 * **Result:** Extracted full URLs and target host/domain names, indicating a C2 (Command and Control) infrastructure address or a payload download point.
+<img width="1156" height="930" alt="warzone2-2" src="https://github.com/user-attachments/assets/dabe8f78-37be-4b5f-aebc-5619520b225c" />
+
 
 ### 3. File Artifact Analysis and Indicator Extraction (NetworkMiner)
 * **Action:** Loaded the PCAP file into NetworkMiner to analyze files transferred during the session.
@@ -31,6 +35,8 @@ Investigation was conducted following network IDS alerts indicating a Trojan inf
 ### 4. Data Enrichment and Threat Identification (VirusTotal)
 * **Action:** Checked the acquired file hashes against the VirusTotal database.
 * **Result:** Confirmed the malicious nature of the file (obtained payload classification) and identified related Indicators of Compromise (IoCs – file hashes, IP addresses, and domains).
+  <img width="1786" height="582" alt="warzone2-virustotal" src="https://github.com/user-attachments/assets/48e23bc5-d6f4-4dfb-a0f5-868555c5b6ac" />
+
 
 ### 5. Vector Identification and Client Metadata (User-Agent)
 * **Action:** Returned to Brim to extract HTTP header details for the suspicious connection.
